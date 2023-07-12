@@ -8,4 +8,3 @@ Route::get('/', function () {
     return view('home');
 });
 //You Can also return the view file
-Route::view('/view-file-only', 'viewFileOnly');
