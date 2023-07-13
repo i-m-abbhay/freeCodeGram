@@ -321,3 +321,50 @@ It helps your site to indentify the real user and make sure that form is not bei
 
 > Equivalent way.
 > <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+# Controller and Redirect Session
+
+One can create controller by using the following command
+`php artisan make:controller Profile/AvatarController`.
+
+```php
+class AvatarController extends Controller
+{
+  public function update()
+  {
+    return response()->redirectTo('/profile');
+  }
+}
+```
+
+**The above code is for redirecting to any route.**
+_We can use `return redirect('/profile')` & `->redirectTo(route('route-name'))` also. Instead of that we can also use ->back() method._
+
+### The code below is returning to back with a message of success.
+
+```php
+<?php
+
+namespace App\Http\Controllers\Profile;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class AvatarController extends Controller
+{
+    public function update()
+    {
+        return back()->with('success', 'Avatar is updated successfully.');
+    }
+}
+```
+
+```html
+@if (session('success'))
+<div class="text-red-500">{{session('success')}}</div>
+@endif
+```
+
+Inside our blade file. We access the message through a method described above
+
+_There is also a method `->withInput()` which is used to fill the old values back into the form if there is some error occured and we were redirected back to form._

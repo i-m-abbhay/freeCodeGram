@@ -9,6 +9,12 @@
          </p>
      </header>
  
+     @if (session('success'))
+        <div class="text-red-500">
+            {{session('success')}}
+        </div>
+     @endif
+
      <form id="send-verification" method="post" action="{{ route('verification.send') }}">
          @csrf
      </form>
