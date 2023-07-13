@@ -297,7 +297,10 @@ We are setting up the Avatar Card for updating the avatar field.
 ```
 
 > Equivalent way.
-> <input type="hidden" name="_method" value="patch">
+
+```html
+<input type="hidden" name="_method" value="patch" />
+```
 
 # CSRF - Cross Site Request Forgeries
 
@@ -320,7 +323,10 @@ It helps your site to indentify the real user and make sure that form is not bei
 ```
 
 > Equivalent way.
-> <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+```html
+<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+```
 
 # Controller and Redirect Session
 
@@ -378,7 +384,7 @@ You can checkout the [Official Documentation](https://laravel.com/docs/10.x/requ
 > Form Validation is necessary whenever you send some data through form.
 > _Search about the validation in the documentation and dealing with validation errors._
 
-> To send the file through a form
+> To send the file through a form `enctype="multipart/form-data"` attribute should be there in the form element.
 
 ```html
 <form
@@ -447,3 +453,37 @@ class UpdateAvatarRequest extends FormRequest
 }
 
 ```
+
+# File Storage
+
+To upload the avatar image in our db we should search file in documentaion.
+[Link](https://laravel.com/docs/10.x/filesystem#configuration)
+
+> Checkout `config\filesystems.php` for various options regarding the file storage.
+
+```php
+class AvatarController extends Controller
+{
+    public function update(UpdateAvatarRequest $request)
+    {
+        $request->file('avatar')->store('avatars'); // this will store the file inside storage/app/avatars when someone sents an avatar with the request.
+        return back()->with('success', 'Avatar is updated successfully.');
+    }
+}
+```
+
+But we still are not saving the path into our database. We are just storing the image uploaded in the form in storage under a subdirectory called avatars.
+
+```php
+class AvatarController extends Controller
+{
+    public function update(UpdateAvatarRequest $request)
+    {
+        $path = $request->file('avatar')->store('avatars');
+        auth()->user()->update(['avatar'=> storage_path('app')."/$path"]);
+        return back()->with('success', 'Avatar is updated successfully.');
+    }
+}
+```
+
+_Make sure to add avatar to fillable inside our User Model._

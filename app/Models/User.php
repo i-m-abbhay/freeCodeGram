@@ -44,12 +44,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        // 'password' => 'hashed',
+        'password' => 'hashed',
     ];
-    protected function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => bcrypt($value)
-        );
-    }
+    // protected function password(): Attribute
+    // {
+    //     return Attribute::make(
+    //         set: fn ($value) => bcrypt($value)
+    //     );
+    // }
 }
