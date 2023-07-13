@@ -275,15 +275,49 @@ $user->update([
 
 **We can use `User::ungaurded()` & `User::regard()` commands to bypass the fillable and gaurded properties.**
 
-## Method spoofing
-
-```php
-<form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
-  @csrf
-  @method('patch') // laravel will interpret as patch request not as a post request
-</form>
-```
-
 ### @include('profile.partials.update-profile-information-form') this line will help including the partial files.
 
 We are setting up the Avatar Card for updating the avatar field.
+
+# Method Spoofing
+
+```php
+<form method="post" action="{{route('profile.avatar')}}">
+  @method('PATCH') //HTMl does not provide patch request. We need to perform method spoofing.
+    <div>
+      <x-input-label for="name" value="Avatar" />
+      <x-text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" :value="old('avatar', $user->avatar)" required autofocus autocomplete="avatar" />
+      <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+    </div>
+
+    <div class="flex items-center gap-4">
+      <x-primary-button>{{ __('Save') }}</x-primary-button>
+    </div>
+</form>
+```
+
+> Equivalent way.
+> <input type="hidden" name="_method" value="patch">
+
+# CSRF - Cross Site Request Forgeries
+
+In your `app\Http\Middleware\VerifyCsrfToken.php` file you can find the CSRF token verifier.
+It helps your site to indentify the real user and make sure that form is not being submitted by any mallicious user.
+
+```php
+<form method="post" action="{{route('profile.avatar')}}">
+  @method('PATCH') //HTMl does not provide patch request. We need to perform method spoofing.
+    <div>
+      <x-input-label for="name" value="Avatar" />
+      <x-text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" :value="old('avatar', $user->avatar)" required autofocus autocomplete="avatar" />
+      <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+    </div>
+
+    <div class="flex items-center gap-4">
+      <x-primary-button>{{ __('Save') }}</x-primary-button>
+    </div>
+</form>
+```
+
+> Equivalent way.
+> <input type="hidden" name="_token" value="{{ csrf_token() }}">

@@ -12,7 +12,9 @@
      <form id="send-verification" method="post" action="{{ route('verification.send') }}">
          @csrf
      </form>
-     <form method="post" action="/profile/avatar">
+     <form method="post" action="{{route('profile.avatar')}}">
+        @csrf
+        @method('PATCH')
           <div>
                <x-input-label for="name" value="Avatar" />
                <x-text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" :value="old('avatar', $user->avatar)" required autofocus autocomplete="avatar" />
