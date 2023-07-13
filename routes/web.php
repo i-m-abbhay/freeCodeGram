@@ -6,6 +6,10 @@ use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', function () {
+
+    $users = DB::table('users')->where('id', 1)->get();
+    dd($users);
+
     // fetch all users
     // $users = DB::select("select * from users where email=?", ['abhay.tiwari.er@gmail.com']);
     // dd($users);
@@ -22,7 +26,7 @@ Route::get('/', function () {
     //deleting user
     // $user = DB::delete("delete from users where id=2");
     // dd($user);
-    return view('welcome');
+    // return view('welcome');
 });
 
 Route::get('/dashboard', function () {
