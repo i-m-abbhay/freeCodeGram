@@ -368,3 +368,82 @@ class AvatarController extends Controller
 Inside our blade file. We access the message through a method described above
 
 _There is also a method `->withInput()` which is used to fill the old values back into the form if there is some error occured and we were redirected back to form._
+
+# Form request Data
+
+You can checkout the [Official Documentation](https://laravel.com/docs/10.x/requests#accessing-the-request) for information in depth.
+
+## Validation
+
+> Form Validation is necessary whenever you send some data through form.
+> _Search about the validation in the documentation and dealing with validation errors._
+
+> To send the file through a form
+
+```html
+<form
+    method="post"
+    action="{{route('profile.avatar')}}"
+    enctype="multipart/form-data"
+>
+    @csrf @method('PATCH')
+    <div>
+        <x-input-label for="name" value="Avatar" />
+        <x-text-input
+            id="avatar"
+            name="avatar"
+            type="file"
+            class="mt-1 block w-full"
+            :value="old('avatar', $user->avatar)"
+            required
+            autofocus
+            autocomplete="avatar"
+        />
+        <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+    </div>
+
+    <div class="flex items-center gap-4">
+        <x-primary-button>{{ __('Save') }}</x-primary-button>
+    </div>
+</form>
+```
+
+# Form Request Validation
+
+It is not good to have validation inside the controller. Because controller should only deal with data flow not with any kind of logic.
+
+`php artisan make:request UpdateAvatarRequest`
+
+Below is the code of UpdateAvatar. We have removed the validation from Avatar Controller.php
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateAvatarRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'avatar' => ['required', 'image'], //wto validation rules work from left to right 1-required, 2-image
+        ];
+    }
+}
+
+```

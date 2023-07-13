@@ -18,7 +18,7 @@
      <form id="send-verification" method="post" action="{{ route('verification.send') }}">
          @csrf
      </form>
-     <form method="post" action="{{route('profile.avatar')}}">
+     <form method="post" action="{{route('profile.avatar')}}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
           <div>
