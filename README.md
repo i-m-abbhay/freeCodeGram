@@ -88,18 +88,18 @@ you can use `{{____}}` for php code inside the blade template files.
 
 ![Alt text](image-1.png)
 
-> ## View
->
+## View
+
 > It's the html part which represents the current model state. for example the blade file of mvc pattern.
 
-> ## Controller
->
+## Controller
+
 > Controls and decides the data flow.
 > Every controller extends the Base Controller of Laravel
 > _Make sure that controller is always lean, minimal and very very Short. Should not include any logic of your application_
 
-> ## Model
->
+## Model
+
 > Models help us to interact with the database.
 > This is responsible to do all the CRUD mySQL query in a particular table.
 > _if any class extends Model class of Laravel then that class becomes a model_
@@ -122,3 +122,35 @@ class Book extends Model
 ## MVC Pattern
 
 > It states that whenever we need to reed something we are not directly tell that I need something. We tell the controller to get the data it's controllers's responisbility to fetch the data and pass the views back to us.
+
+# Running raw SQL queries
+
+We can run raw sql queries with something called DB facade.
+
+```php
+<?php
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+
+
+Route::get('/', function () {
+        // fetch all users
+    // $users = DB::select("select * from users where email=?", ['abhay.tiwari.er@gmail.com']);
+    // dd($users);
+
+    //create an user
+    // $user = DB::insert('insert into users (name, email, password) values (?,?,?)', ['Abhay', '20je0018@me.iitism.ac.in', 'password']);
+    // dd($user);
+
+    //updating user
+    // $user = DB::update("update users set email='abc@bitfumes.com' where id=2");
+    // dd($user);
+
+    //deleting user
+    // $user = DB::delete("delete from users where id=2");
+    // dd($user);
+    return view('welcome');
+});
+```
