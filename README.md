@@ -283,3 +283,7 @@ $user->update([
   @method('patch') // laravel will interpret as patch request not as a post request
 </form>
 ```
+
+### @include('profile.partials.update-profile-information-form') this line will help including the partial files.
+
+We are setting up the Avatar Card for updating the avatar field.
