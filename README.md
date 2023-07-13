@@ -267,3 +267,19 @@ $user->update([
 > But The above method will not reflect the change in Database despite returning true.
 
 ### Here comes the yet another laravel functionality mass assignment into the picture.
+
+[Official Mass Assignment](https://laravel.com/docs/10.x/eloquent#mass-assignment)
+
+> Our User model have specified fillable and gaurded fields inside the model.
+> _Make sure to restart the tinker and again start after doing any changes in codebase._
+
+**We can use `User::ungaurded()` & `User::regard()` commands to bypass the fillable and gaurded properties.**
+
+## Method spoofing
+
+```php
+<form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+  @csrf
+  @method('patch') // laravel will interpret as patch request not as a post request
+</form>
+```
