@@ -217,3 +217,24 @@ protected function password(): Attribute
 ```
 
 Similar to mutator there is also accessor. Checkout the official Documentation for more information.
+
+# Configurations in Laravel
+
+It always starts with `.env` file. You can find `/config` directory in the root folder & there all the necessary configurations can be found.
+
+> Laravel uses a global function `env(Key, default value)` in the php file to get the values from `.env` file.
+
+_reading from this file again and again is not good for performance of our app. Hence laravel uses Caching to deal with this._
+
+# Caching in Laravel
+
+Go into `/bootstrap/cache` directory inside your root directory.
+
+## Configuration Caching in Laravel
+
+> in the php artisan we have `config` related command.
+> if we run the `php artisan config:cache` command there will be a new file inside your `bootstrap/cache`. It is responsible for reading and storing all the necessary details of each and every file inside config for faster performance.
+
+_Whenever you change something in `.env` (Make sure to add quotes if your string consists spaces.). We have to run `php artisan config:cache` again_
+
+> `config:clear` removes the config cache
