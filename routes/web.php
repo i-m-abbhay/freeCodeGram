@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -7,14 +8,25 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
 
-    $users = DB::table('users')->where('id', 1)->get();
-    dd($users);
+    // $user = User::create([
+    //     'name' => 'abhay2',
+    //     'email' => 'abc2s@gmail.com',
+    //     'password' => 'password',
+    // ]);
+
+    // $user = DB::table('users')->insert([
+    //     'name' => 'abhayt',
+    //     'email' => 'abcd@gmail.com',
+    //     'password' => 'password',
+    // ]);
+    // $users = DB::table('users')->where('id', 1)->get();
+    // dd($users);
 
     // fetch all users
     // $users = DB::select("select * from users where email=?", ['abhay.tiwari.er@gmail.com']);
     // dd($users);
 
-    //create an user
+    // create an user
     // $user = DB::insert('insert into users (name, email, password) values (?,?,?)', ['Abhay', '20je0018@me.iitism.ac.in', 'password']);
     // dd($user);
 
@@ -23,10 +35,10 @@ Route::get('/', function () {
     // $user = DB::update("update users set email='abc@bitfumes.com' where id=2");
     // dd($user);
 
-    //deleting user
-    // $user = DB::delete("delete from users where id=2");
+    // deleting user
+    // $user = DB::delete("delete from users where id=1");
     // dd($user);
-    // return view('welcome');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
