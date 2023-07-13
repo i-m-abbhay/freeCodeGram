@@ -12,7 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('ALTER TABLE users CHANGE name username VARCHAR(255)');
+        // DB::statement('ALTER TABLE users CHANGE name username VARCHAR(255)');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'username');
+        });
     }
 
     /**
@@ -20,9 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->renameColumn('username', 'name');
-        // });
-        DB::statement('ALTER TABLE users CHANGE username name VARCHAR(255)');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('username', 'name');
+        });
+        // DB::statement('ALTER TABLE users CHANGE username name VARCHAR(255)');
     }
 };
