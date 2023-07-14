@@ -487,3 +487,15 @@ class AvatarController extends Controller
 ```
 
 _Make sure to add avatar to fillable inside our User Model._
+
+# Up until now we have successfully stored the avatar files in `storage/app/avatars`
+
+Now to make it accessible to laravel to fetch it to the update page and show it to the user. We have to symbolic-link storage/public to public of root directory by running `php artisan storage:link` command.
+After running the command you can notice an icon in front of the folder icon in `public/storage`.
+Basically our `storage/app/public` is now symbolically linked to `public/storage`.
+
+By doing this we can get the file from `localhost:8000/storage/lkhfahdoahdahduiowi.jpg`.
+
+> Checkout the store and storeAs methods in Documentation.
+
+_This is complecated to write in the readme.md checkout the changes in the repository after the commit to find out how we have implemented saving of our avatar in storage and how we are able to show it in the profile edit page._
